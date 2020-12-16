@@ -1,5 +1,9 @@
 package com.plugin.drm_video
 
+/*import kotlinx.android.synthetic.main.custom_exo_controller_view.view.*
+import kotlinx.android.synthetic.main.track_selection_dialog.*
+import kotlinx.android.synthetic.main.track_selection_dialog.view.**/
+
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.res.Resources
@@ -10,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatDialog
-import androidx.core.graphics.alpha
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -23,10 +26,6 @@ import com.google.android.exoplayer2.ui.TrackSelectionView
 import com.google.android.exoplayer2.ui.TrackSelectionView.TrackSelectionListener
 import com.google.android.exoplayer2.util.Assertions
 import com.google.android.material.tabs.TabLayout
-/*import kotlinx.android.synthetic.main.custom_exo_controller_view.view.*
-import kotlinx.android.synthetic.main.track_selection_dialog.*
-import kotlinx.android.synthetic.main.track_selection_dialog.view.**/
-
 import java.util.*
 
 

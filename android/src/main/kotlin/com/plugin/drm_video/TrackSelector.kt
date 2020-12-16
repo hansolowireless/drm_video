@@ -23,9 +23,10 @@ import com.google.android.exoplayer2.ui.TrackSelectionView
 import com.google.android.exoplayer2.ui.TrackSelectionView.TrackSelectionListener
 import com.google.android.exoplayer2.util.Assertions
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.custom_exo_controller_view.view.*
+/*import kotlinx.android.synthetic.main.custom_exo_controller_view.view.*
 import kotlinx.android.synthetic.main.track_selection_dialog.*
-import kotlinx.android.synthetic.main.track_selection_dialog.view.*
+import kotlinx.android.synthetic.main.track_selection_dialog.view.**/
+
 import java.util.*
 
 

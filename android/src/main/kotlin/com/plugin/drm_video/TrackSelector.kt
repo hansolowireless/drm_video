@@ -1,4 +1,4 @@
-package com.example.openstream_flutter
+package com.plugin.drm_video
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.res.Resources

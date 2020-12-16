@@ -1,6 +1,7 @@
 package com.plugin.drm_video
 
 import android.content.Context
+import android.content.DialogInterface
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -112,9 +113,30 @@ internal class DrmVideoPlayer(
             "getPosition" -> {
                 getPosition(result)
             }
+            "showTrackSelector" -> {
+                showTrackSelector()
+            }
             "dispose" -> {
                 dispose();
             }
+        }
+    }
+
+    //Quality Selector vars
+    private var isShowingTrackSelectionDialog = false
+    private var trackSelector: DefaultTrackSelector? = null
+//    private var trackSelectorParameters: DefaultTrackSelector.Parameters? = null
+
+    //Track Selector
+    private fun showTrackSelector(): Unit {
+        if (!isShowingTrackSelectionDialog
+                && TrackSelectionDialog.willHaveContent(trackSelector!!)) {
+            isShowingTrackSelectionDialog = true
+            val trackSelectionDialog = TrackSelectionDialog.createForTrackSelector(
+                    trackSelector!!  /* onDismissListener= */, onDismissListener = DialogInterface.OnDismissListener { isShowingTrackSelectionDialog = false
+            }
+            )
+            trackSelectionDialog.show(supportFragmentManager,  /* tag= */null)
         }
     }
 
@@ -181,10 +203,8 @@ internal class DrmVideoPlayer(
             formatHint = params["formatHint"] as String;
         }
 
-        val trackSelector = DefaultTrackSelector(context)
-        trackSelector.setParameters(
-                trackSelector.buildUponParameters().setMaxVideoSizeSd()
-        )
+        trackSelector = DefaultTrackSelector(context)
+        trackSelector!.setParameters(trackSelector!.buildUponParameters().setMaxVideoSizeSd())
 
         var drmSessionManager: DrmSessionManager? = null;
 

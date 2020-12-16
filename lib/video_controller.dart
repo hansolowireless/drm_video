@@ -22,6 +22,10 @@ class VideoController extends ValueNotifier<VideoPlayerValue> {
     _channel = new MethodChannel('drmvideo_$id');
   }
 
+  Future<void> showTrackDialog() async {
+    await _channel.invokeMethod("showTrackSelector");
+  }
+
   Future<void> seekTo(Duration position) async {
     if (_isDisposed) {
       return;

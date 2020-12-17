@@ -204,7 +204,9 @@ internal class DrmVideoPlayer(
         }
 
         trackSelector = DefaultTrackSelector(context)
-        trackSelector!.setParameters(trackSelector!.buildUponParameters().setMaxVideoSizeSd())
+        trackSelector!!.setParameters(
+                trackSelector!!.buildUponParameters().setMaxVideoSizeSd()
+        )
 
         var drmSessionManager: DrmSessionManager? = null;
 
@@ -216,7 +218,7 @@ internal class DrmVideoPlayer(
         }
 
         player = SimpleExoPlayer.Builder(context)
-                .setTrackSelector(trackSelector)
+                .setTrackSelector(trackSelector!!)
                 .build()
 
         val uri: Uri = Uri.parse(drmLicenseUrl);

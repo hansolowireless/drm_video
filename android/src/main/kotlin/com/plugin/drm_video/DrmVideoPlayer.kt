@@ -5,29 +5,21 @@ import android.content.DialogInterface
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.Player.REPEAT_MODE_ALL
 import com.google.android.exoplayer2.Player.REPEAT_MODE_OFF
-
-import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.Format;
-import com.google.android.exoplayer2.MediaItem;
-import com.google.android.exoplayer2.PlaybackParameters;
-import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.Player.EventListener;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.audio.AudioAttributes;
-import com.google.android.exoplayer2.source.ProgressiveMediaSource;
-import com.google.android.exoplayer2.source.hls.HlsMediaSource;
-import com.google.android.exoplayer2.source.smoothstreaming.DefaultSsChunkSource;
-import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.drm.DefaultDrmSessionManager
 import com.google.android.exoplayer2.drm.DrmSessionManager
 import com.google.android.exoplayer2.drm.HttpMediaDrmCallback
 import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.dash.DashMediaSource
 import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource
+import com.google.android.exoplayer2.source.hls.HlsMediaSource
+import com.google.android.exoplayer2.source.smoothstreaming.DefaultSsChunkSource
+import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.upstream.DataSource
@@ -44,12 +36,11 @@ import io.flutter.plugin.platform.PlatformView
 import java.util.*
 import kotlin.collections.HashMap
 
-
-internal class DrmVideoPlayer(
+internal class DrmVideoPlayer (
         private val context: Context,
         private val messenger: BinaryMessenger,
         private val id: Int,
-        private val params: Map<String, Any>) : PlatformView, MethodChannel.MethodCallHandler {
+        private val params: Map<String, Any>) : PlatformView, MethodChannel.MethodCallHandler, AppCompatActivity() {
 
 
     private val FORMAT_SS = "ss"
@@ -136,7 +127,7 @@ internal class DrmVideoPlayer(
                     trackSelector!!  /* onDismissListener= */, onDismissListener = DialogInterface.OnDismissListener { isShowingTrackSelectionDialog = false
             }
             )
-            trackSelectionDialog.show(supportFragmentManager,  /* tag= */null)
+            trackSelectionDialog.show(supportFragmentManager, null)
         }
     }
 

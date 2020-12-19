@@ -195,13 +195,13 @@ internal class DrmVideoPlayer (
         }
 
         val builder = DefaultTrackSelector.ParametersBuilder( /* context= */this)
-        trackSelectorParameters = builder.build()
+//        trackSelectorParameters = builder.build()
 
         trackSelector = DefaultTrackSelector(context)
         trackSelector!!.setParameters(
                 trackSelector!!.buildUponParameters().setMaxVideoSizeSd()
         )
-        trackSelector!!.parameters = trackSelectorParameters!!
+//        trackSelector!!.parameters = trackSelectorParameters!!
 
         var drmSessionManager: DrmSessionManager? = null;
 

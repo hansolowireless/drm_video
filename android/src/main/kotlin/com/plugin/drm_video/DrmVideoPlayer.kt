@@ -198,9 +198,9 @@ internal class DrmVideoPlayer (
         trackSelectorParameters = builder.build()
 
         trackSelector = DefaultTrackSelector(context)
-        /*trackSelector!!.setParameters(
+        trackSelector!!.setParameters(
                 trackSelector!!.buildUponParameters().setMaxVideoSizeSd()
-        )*/
+        )
         trackSelector!!.parameters = trackSelectorParameters!!
 
         var drmSessionManager: DrmSessionManager? = null;

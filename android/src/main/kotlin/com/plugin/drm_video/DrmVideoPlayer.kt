@@ -116,7 +116,7 @@ internal class DrmVideoPlayer (
     //Quality Selector vars
     private var isShowingTrackSelectionDialog = false
     private var trackSelector: DefaultTrackSelector? = null
-//    private var trackSelectorParameters: DefaultTrackSelector.Parameters? = null
+    private var trackSelectorParameters: DefaultTrackSelector.Parameters? = null
 
     //Track Selector
     private fun showTrackSelector(): Unit {
@@ -194,10 +194,14 @@ internal class DrmVideoPlayer (
             formatHint = params["formatHint"] as String;
         }
 
+        val builder = DefaultTrackSelector.ParametersBuilder( /* context= */this)
+        trackSelectorParameters = builder.build()
+
         trackSelector = DefaultTrackSelector(context)
-        trackSelector!!.setParameters(
+        /*trackSelector!!.setParameters(
                 trackSelector!!.buildUponParameters().setMaxVideoSizeSd()
-        )
+        )*/
+        trackSelector!!.parameters = trackSelectorParameters!!
 
         var drmSessionManager: DrmSessionManager? = null;
 

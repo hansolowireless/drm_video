@@ -6,6 +6,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.Player.REPEAT_MODE_ALL
 import com.google.android.exoplayer2.Player.REPEAT_MODE_OFF
@@ -20,7 +21,9 @@ import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.source.smoothstreaming.DefaultSsChunkSource
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.trackselection.TrackSelection
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -62,6 +65,7 @@ internal class DrmVideoPlayer (
 
     private val eventSink: QueuingEventSink = QueuingEventSink()
 
+    private val builder = DefaultTrackSelector.ParametersBuilder(context)
 
     override fun getView(): View {
         return view!!
@@ -127,7 +131,7 @@ internal class DrmVideoPlayer (
                     trackSelector!!  /* onDismissListener= */, onDismissListener = DialogInterface.OnDismissListener { isShowingTrackSelectionDialog = false
             }
             )
-            trackSelectionDialog.show(supportFragmentManager, null)
+            trackSelectionDialog.show((context as FragmentActivity).supportFragmentManager, null)
         }
     }
 
@@ -194,14 +198,18 @@ internal class DrmVideoPlayer (
             formatHint = params["formatHint"] as String;
         }
 
-        val builder = DefaultTrackSelector.ParametersBuilder( /* context= */this)
-//        trackSelectorParameters = builder.build()
 
-        trackSelector = DefaultTrackSelector(context)
-        trackSelector!!.setParameters(
+
+//        trackSelector = DefaultTrackSelector(context)
+
+        val trackSelectionFactory: TrackSelection.Factory = AdaptiveTrackSelection.Factory()
+        trackSelector = DefaultTrackSelector(context, trackSelectionFactory)
+        trackSelectorParameters = builder.build()
+        trackSelector!!.parameters = trackSelectorParameters!!
+
+/*        trackSelector!!.setParameters(
                 trackSelector!!.buildUponParameters().setMaxVideoSizeSd()
-        )
-//        trackSelector!!.parameters = trackSelectorParameters!!
+        )*/
 
         var drmSessionManager: DrmSessionManager? = null;
 

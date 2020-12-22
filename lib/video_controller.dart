@@ -26,6 +26,10 @@ class VideoController extends ValueNotifier<VideoPlayerValue> {
     await _channel.invokeMethod("showTrackSelector");
   }
 
+  Future<void> setNewContent(String videoUrl, String licenseUrl) async {
+    await _channel.invokeMethod("setNewContent", [videoUrl, licenseUrl]);
+  }
+
   Future<void> seekTo(Duration position) async {
     if (_isDisposed) {
       return;

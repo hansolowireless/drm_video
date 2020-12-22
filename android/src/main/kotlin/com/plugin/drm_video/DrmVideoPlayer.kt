@@ -111,6 +111,9 @@ internal class DrmVideoPlayer (
             "showTrackSelector" -> {
                 showTrackSelector()
             }
+            "setNewContent" -> {
+                setNewContent(call)
+            }
             "dispose" -> {
                 dispose();
             }
@@ -177,6 +180,46 @@ internal class DrmVideoPlayer (
         val volume = call.arguments as Double
         val bracketedValue = Math.max(0.0, Math.min(1.0, volume)).toFloat()
         player?.volume = bracketedValue
+    }
+
+    private fun setNewContent(call: MethodCall) {
+        val newContent = call.arguments as List<String>
+        val drmLicenseUrl = newContent[1]
+        player?.stop()
+
+        var drmSessionManager: DrmSessionManager? = null;
+
+        if (drmLicenseUrl.isNotEmpty()) {
+            val drmCallback = HttpMediaDrmCallback(drmLicenseUrl, DefaultHttpDataSourceFactory())
+
+            drmSessionManager = DefaultDrmSessionManager.Builder().build(drmCallback)
+        }
+
+        val uri: Uri = Uri.parse(drmLicenseUrl);
+
+        val dataSourceFactory: DataSource.Factory
+        dataSourceFactory = if (isHTTP(uri)) {
+            DefaultHttpDataSourceFactory(
+                    "ExoPlayer",
+                    null,
+                    DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
+                    DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS,
+                    true
+            )
+        } else {
+            DefaultDataSourceFactory(context, "ExoPlayer")
+        }
+
+
+        val mediaSource: MediaSource = buildMediaSource(Uri.parse(newContent[0]), dataSourceFactory, "", context, drmSessionManager)!!
+
+        player?.setMediaSource(mediaSource)
+//        playerView?.player = player
+
+        player?.playWhenReady = true
+        player?.prepare()
+
+        setUpVideo()
     }
 
     private fun initializePlayer() {

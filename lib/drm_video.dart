@@ -277,6 +277,13 @@ class _VideoProgressIndicatorState extends State<VideoProgressIndicator> {
     super.deactivate();
   }
 
+  String _printDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget progressIndicator;
@@ -292,19 +299,33 @@ class _VideoProgressIndicatorState extends State<VideoProgressIndicator> {
         }
       }
 
-      progressIndicator = Stack(
-        fit: StackFit.passthrough,
-        children: <Widget>[
-          LinearProgressIndicator(
-            value:
-                (maxBuffering / duration).isNaN ? 0 : maxBuffering / duration,
-            valueColor: AlwaysStoppedAnimation<Color>(colors.bufferedColor),
-            backgroundColor: colors.backgroundColor,
+      progressIndicator = Row(
+        children: [
+          Text(
+            _printDuration(controller.value.position),
+            style: TextStyle(color: Colors.white),
           ),
-          LinearProgressIndicator(
-            value: (position / duration).isNaN ? 0 : position / duration,
-            valueColor: AlwaysStoppedAnimation<Color>(colors.playedColor),
-            backgroundColor: Colors.transparent,
+          Expanded(
+              child: Stack(
+            fit: StackFit.passthrough,
+            children: <Widget>[
+              LinearProgressIndicator(
+                value: (maxBuffering / duration).isNaN
+                    ? 0
+                    : maxBuffering / duration,
+                valueColor: AlwaysStoppedAnimation<Color>(colors.bufferedColor),
+                backgroundColor: colors.backgroundColor,
+              ),
+              LinearProgressIndicator(
+                value: (position / duration).isNaN ? 0 : position / duration,
+                valueColor: AlwaysStoppedAnimation<Color>(colors.playedColor),
+                backgroundColor: Colors.transparent,
+              ),
+            ],
+          )),
+          Text(
+            _printDuration(controller.value.duration),
+            style: TextStyle(color: Colors.white),
           ),
         ],
       );

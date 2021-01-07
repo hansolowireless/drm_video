@@ -25,7 +25,9 @@ import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelection
+import com.google.android.exoplayer2.ui.DefaultTrackNameProvider
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.google.android.exoplayer2.ui.TrackNameProvider
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
@@ -146,7 +148,9 @@ internal class DrmVideoPlayer (
         }
     }
     private fun queryPlaybackStats(result: MethodChannel.Result) {
-        result.success(statsListener.playbackStats.toString())
+        val trackNameProvider: TrackNameProvider = DefaultTrackNameProvider(resources)
+//        result.success(statsListener.playbackStats.toString())
+        result.success(trackNameProvider.getTrackName(player?.videoFormat!!))
     }
 
     private fun getPosition(result: MethodChannel.Result) {

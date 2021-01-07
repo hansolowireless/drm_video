@@ -11,6 +11,7 @@ import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.Player.REPEAT_MODE_ALL
 import com.google.android.exoplayer2.Player.REPEAT_MODE_OFF
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.analytics.PlaybackStatsListener
 import com.google.android.exoplayer2.drm.DefaultDrmSessionManager
 import com.google.android.exoplayer2.drm.DrmSessionManager
 import com.google.android.exoplayer2.drm.HttpMediaDrmCallback
@@ -67,6 +68,8 @@ internal class DrmVideoPlayer (
 
     private val builder = DefaultTrackSelector.ParametersBuilder(context)
 
+    private val statsListener : PlaybackStatsListener = PlaybackStatsListener()
+
     override fun getView(): View {
         return view!!
     }
@@ -114,6 +117,9 @@ internal class DrmVideoPlayer (
             "setNewContent" -> {
                 setNewContent(call)
             }
+            "queryPlaybackStats" -> {
+                queryPlaybackStats(result)
+            }
             "dispose" -> {
                 dispose();
             }
@@ -136,6 +142,9 @@ internal class DrmVideoPlayer (
             )
             trackSelectionDialog.show((context as FragmentActivity).supportFragmentManager, null)
         }
+    }
+    private fun queryPlaybackStats(result: MethodCall.Result) {
+        result.success(statsListener.playbackStats)
     }
 
     private fun getPosition(result: MethodChannel.Result) {
@@ -286,6 +295,7 @@ internal class DrmVideoPlayer (
         val mediaSource: MediaSource = buildMediaSource(Uri.parse(videoUrl), dataSourceFactory, formatHint, context, drmSessionManager)!!
 
         player?.setMediaSource(mediaSource)
+        player?.addAnalyticsListener(statsListener)
         playerView?.player = player
 
 //        player?.playWhenReady = autoPlay

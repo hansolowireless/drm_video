@@ -143,7 +143,7 @@ internal class DrmVideoPlayer (
             trackSelectionDialog.show((context as FragmentActivity).supportFragmentManager, null)
         }
     }
-    private fun queryPlaybackStats(result: MethodCall.Result) {
+    private fun queryPlaybackStats(result: MethodChannel.Result) {
         result.success(statsListener.playbackStats)
     }
 

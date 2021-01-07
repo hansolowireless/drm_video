@@ -132,6 +132,14 @@ class VideoController extends ValueNotifier<VideoPlayerValue> {
     return Duration(milliseconds: position ?? 0);
   }
 
+  Future<String> get playbackStats async {
+    if (_isDisposed) {
+      return null;
+    }
+    String stats = await _channel.invokeMethod("queryPlaybackStats");
+    return stats;
+  }
+
   void _updatePosition(Duration position) {
     value = value.copyWith(position: position);
   }

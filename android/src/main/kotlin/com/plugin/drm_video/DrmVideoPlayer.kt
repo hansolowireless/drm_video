@@ -68,7 +68,9 @@ internal class DrmVideoPlayer (
 
     private val builder = DefaultTrackSelector.ParametersBuilder(context)
 
-    private val statsListener : PlaybackStatsListener = PlaybackStatsListener()
+    private val statsListener : PlaybackStatsListener = PlaybackStatsListener(false) {eventTime, playbackStats ->
+        
+    }
 
     override fun getView(): View {
         return view!!

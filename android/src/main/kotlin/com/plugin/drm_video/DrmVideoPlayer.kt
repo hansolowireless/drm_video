@@ -148,7 +148,7 @@ internal class DrmVideoPlayer (
         }
     }
     private fun queryPlaybackStats(result: MethodChannel.Result) {
-        val trackNameProvider: TrackNameProvider = DefaultTrackNameProvider(resources)
+        val trackNameProvider: TrackNameProvider = DefaultTrackNameProvider(context.resources)
 //        result.success(statsListener.playbackStats.toString())
         result.success(trackNameProvider.getTrackName(player?.videoFormat!!))
     }

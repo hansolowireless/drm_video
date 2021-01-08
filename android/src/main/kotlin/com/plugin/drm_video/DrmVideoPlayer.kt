@@ -39,6 +39,7 @@ import io.flutter.plugin.common.EventChannel.EventSink
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.platform.PlatformView
+import org.json.JSONObject
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -148,14 +149,14 @@ internal class DrmVideoPlayer (
         }
     }
     private fun queryPlaybackStats(result: MethodChannel.Result) {
-        val trackNameProvider: TrackNameProvider = DefaultTrackNameProvider(context.resources)
-//        result.success(statsListener.playbackStats.toString())
-        if (player?.videoFormat != null) {
-            result.success(trackNameProvider.getTrackName(player?.videoFormat!!))
-        }
-        else {
-            result.success("No info")
-        }
+        val rootObject = JSONObject()
+        rootObject.put("playerBw",statsListener.playbackStats?.meanBandwidth.toString())
+        rootObject.put("activeTrack",(if (player?.videoFormat != null ) player?.videoFormat!!.height.toString() else "No Info"))
+        rootObject.put("videobw",(if (player?.videoFormat != null ) player?.videoFormat!!.bitrate.toString() else "No Info"))
+        rootObject.put("bufTime",statsListener.playbackStats?.rebufferRate.toString())
+        rootObject.put("loadLatency",statsListener.playbackStats?.meanJoinTimeMs.toString())
+
+        result.success(rootObject.toString())
     }
 
     private fun getPosition(result: MethodChannel.Result) {

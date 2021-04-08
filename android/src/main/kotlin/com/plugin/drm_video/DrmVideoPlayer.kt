@@ -116,6 +116,7 @@ internal class DrmVideoPlayer (
             "getPosition" -> {
                 getPosition(result)
             }
+            //Added after forking
             "showTrackSelector" -> {
                 showTrackSelector()
             }

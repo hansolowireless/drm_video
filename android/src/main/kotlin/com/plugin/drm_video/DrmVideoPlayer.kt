@@ -149,6 +149,8 @@ internal class DrmVideoPlayer (
             trackSelectionDialog.show((context as FragmentActivity).supportFragmentManager, null)
         }
     }
+
+    //Playback Stats
     private fun queryPlaybackStats(result: MethodChannel.Result) {
         val rootObject = JSONObject()
         rootObject.put("playerBw",statsListener.playbackStats?.meanBandwidth.toString())
@@ -393,7 +395,7 @@ internal class DrmVideoPlayer (
                     }
 
                     override fun onPlayerError(error: ExoPlaybackException) {
-                        eventSink.error("VideoError", "Video player had error $error", null)
+//                        eventSink.error("VideoError", "Video player had error $error", null)
                     }
                 })
     }

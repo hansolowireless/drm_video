@@ -25,9 +25,7 @@ import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelection
-import com.google.android.exoplayer2.ui.DefaultTrackNameProvider
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.google.android.exoplayer2.ui.TrackNameProvider
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
@@ -396,6 +394,12 @@ internal class DrmVideoPlayer (
 
                     override fun onPlayerError(error: ExoPlaybackException) {
 //                        eventSink.error("VideoError", "Video player had error $error", null)
+                        //Distinguish error sources
+                        when (error.type) {
+                            ExoPlaybackException.TYPE_SOURCE -> eventSink.error("VideoError", "Video player had SOURCE error" + error.sourceException.message, null)
+                            ExoPlaybackException.TYPE_RENDERER -> eventSink.error("VideoError", "Video player had RENDERER error" + error.rendererException.message, null)
+                            ExoPlaybackException.TYPE_UNEXPECTED -> eventSink.error("VideoError", "Video player had UNEXPECTED error" + error.unexpectedException.message, null)
+                        }
                     }
                 })
     }

@@ -195,8 +195,7 @@ class VideoController extends ValueNotifier<VideoPlayerValue> {
     void errorListener(Object obj) {
       final PlatformException e = obj;
       _timer?.cancel();
-      value = value.copyWith(errorDescription: e.message);
-      // value = VideoPlayerValue.erroneous(e.message);
+      value = VideoPlayerValue.erroneous(e.message);
     }
 
     _eventSubscription = EventChannel('drmvideo_events$id')

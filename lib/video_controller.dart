@@ -27,6 +27,7 @@ class VideoController extends ValueNotifier<VideoPlayerValue> {
   }
 
   Future<void> setNewContent(String videoUrl, String licenseUrl) async {
+    value = value.copyWith(errorDescription: null);
     await _channel.invokeMethod("setNewContent", [videoUrl, licenseUrl]);
   }
 

@@ -395,7 +395,7 @@ internal class DrmVideoPlayer (
                     }
 
                     override fun onPlayerError(error: ExoPlaybackException) {
-//                        eventSink.error("VideoError", "Video player had error $error", null)
+                        eventSink.error("VideoError", "Video player had error $error", null)
                     }
                 })
     }

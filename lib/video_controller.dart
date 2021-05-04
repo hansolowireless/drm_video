@@ -27,7 +27,6 @@ class VideoController extends ValueNotifier<VideoPlayerValue> {
   }
 
   Future<void> setNewContent(String videoUrl, String licenseUrl) async {
-    value = value.copyWith(errorDescription: null);
     await _channel.invokeMethod("setNewContent", [videoUrl, licenseUrl]);
   }
 
@@ -196,7 +195,8 @@ class VideoController extends ValueNotifier<VideoPlayerValue> {
     void errorListener(Object obj) {
       final PlatformException e = obj;
       _timer?.cancel();
-      value = VideoPlayerValue.erroneous(e.message);
+      value = value.copyWith(errorDescription: e.message);
+      // value = VideoPlayerValue.erroneous(e.message);
     }
 
     _eventSubscription = EventChannel('drmvideo_events$id')

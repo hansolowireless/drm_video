@@ -396,9 +396,9 @@ internal class DrmVideoPlayer (
 //                        eventSink.error("VideoError", "Video player had error $error", null)
                         //Distinguish error sources
                         when (error.type) {
-                            ExoPlaybackException.TYPE_SOURCE -> eventSink.error("VideoError", "Video player had SOURCE error" + error.sourceException.message, null)
-                            ExoPlaybackException.TYPE_RENDERER -> eventSink.error("VideoError", "Video player had RENDERER error" + error.rendererException.message, null)
-                            ExoPlaybackException.TYPE_UNEXPECTED -> eventSink.error("VideoError", "Video player had UNEXPECTED error" + error.unexpectedException.message, null)
+                            ExoPlaybackException.TYPE_SOURCE -> eventSink.error("VideoError", "Video player had SOURCE error" + error.sourceException.localizedMessage, null)
+                            ExoPlaybackException.TYPE_RENDERER -> eventSink.error("VideoError", "Video player had RENDERER error" + error.rendererException.localizedMessage, null)
+                            ExoPlaybackException.TYPE_UNEXPECTED -> eventSink.error("VideoError", "Video player had UNEXPECTED error" + error.unexpectedException.localizedMessage, null)
                         }
                     }
                 })

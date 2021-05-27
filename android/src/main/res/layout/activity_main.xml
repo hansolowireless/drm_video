@@ -11,6 +11,7 @@
         app:use_controller="false"
         app:surface_type="surface_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:show_buffering="always"/>
 
 </RelativeLayout>

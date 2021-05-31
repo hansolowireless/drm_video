@@ -79,17 +79,22 @@ internal class DrmVideoPlayer (
     }
 
     init {
-        if (view == null) {
+   /*     if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.activity_main, null)
-        }
+        }*/
 
         val pm: PackageManager = context.packageManager
         if (pm.hasSystemFeature(PackageManager.FEATURE_LEANBACK)) {
-            playerView = view!!.findViewById(R.id.video_view2)
+            if (view == null) {
+                view = LayoutInflater.from(context).inflate(R.layout.activity_main, null)
+            }
         }
         else {
-            playerView = view!!.findViewById(R.id.video_view)
+            if (view == null) {
+                view = LayoutInflater.from(context).inflate(R.layout.activity_main, null)
+            }
         }
+        playerView = view!!.findViewById(R.id.video_view)
 
         eventChannel = EventChannel(messenger, "drmvideo_events$id")
         methodChannel = MethodChannel(messenger, "drmvideo_$id")

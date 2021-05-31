@@ -2,6 +2,7 @@ package com.plugin.drm_video
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -81,7 +82,14 @@ internal class DrmVideoPlayer (
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.activity_main, null)
         }
-        playerView = view!!.findViewById(R.id.video_view)
+
+        val pm: PackageManager = context.packageManager
+        if (pm.hasSystemFeature(PackageManager.FEATURE_LEANBACK)) {
+            playerView = view!!.findViewById(R.id.video_view2)
+        }
+        else {
+            playerView = view!!.findViewById(R.id.video_view)
+        }
 
         eventChannel = EventChannel(messenger, "drmvideo_events$id")
         methodChannel = MethodChannel(messenger, "drmvideo_$id")

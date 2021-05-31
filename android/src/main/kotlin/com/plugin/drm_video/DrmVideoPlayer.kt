@@ -91,7 +91,7 @@ internal class DrmVideoPlayer (
         }
         else {
             if (view == null) {
-                view = LayoutInflater.from(context).inflate(R.layout.activity_main, null)
+                view = LayoutInflater.from(context).inflate(R.layout.activity_main_mobile, null)
             }
         }
         playerView = view!!.findViewById(R.id.video_view)
